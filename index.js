@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const model = require('./database/model')
 
 var port = 3030
 
@@ -60,12 +61,16 @@ app.post('/games', (req, res) => {
     if (req.body.price) {
       if (req.body.year) {
         var { title, price, year } = req.body
-        DB.games.push({
+        //cadastro no banco de dados
+        model.create({ title: title, year: year, price: price })
+
+        /* DB.games.push({
           id: tamanho + 1,
           title,
           price,
           year
-        })
+        }) */
+
         res.statusCode = 200
         res.send(DB.games)
       } else {
